@@ -1,0 +1,35 @@
+#include <bits/stdc++.h>
+using namespace std;
+int dx[]={2,2,-2,-2,1,1,-1,-1};
+int dy[]={1,-1,1,-1,2,-2,2,-2};
+int n,x,y,x1,y1;
+bool vis[1001][1001];
+bool valid(int i,int j){
+    return (i>0&&j>0&&i<=n&&j<=n);
+}
+int bfs(){
+    queue<pair<int,pair<int,int> > >q;
+    q.push({0,{x,y}});
+    vis[x][y]=true;
+    while(q.size()){
+        pair<int,pair<int,int> > temp=q.front();
+        q.pop();
+        int cost=temp.first;
+        int h=temp.second.first;
+        int f=temp.second.second;
+        if(h==x1&&f==y1)return cost;
+        for(int i=0;i<8;++i){
+            int xx=h+dx[i],yy=f+dy[i];
+            if(valid(xx,yy)&&!vis[xx][yy]){
+                q.push({cost+1,{xx,yy}});
+                vis[xx][yy]=true;
+            }
+        }
+    }
+}
+int main()
+{
+    cin>>n>>x>>y>>x1>>y1;
+    cout<<bfs();
+    return 0;
+}
